@@ -69,9 +69,6 @@ public class SampleSauceTest implements SauceOnDemandSessionIdProvider, SauceOnD
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][]{
                 new Object[]{"internet explorer", "11", "Windows 8.1"},
-                new Object[]{"chrome", "41", "Windows XP"},
-                new Object[]{"safari", "7", "OS X 10.9"},
-                new Object[]{"firefox", "36", "Windows 7"},
                 new Object[]{"firefox", "35", "Windows 7"}
         };
     }
@@ -152,39 +149,10 @@ public class SampleSauceTest implements SauceOnDemandSessionIdProvider, SauceOnD
         WebElement signInButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message.signin a")));
         Thread.sleep(5000);
         signInButton.click();
-
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".loginForm [name=email]")));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".loginForm [name=password]")));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".message.register a")));
+        
     }
 
-    /**
-     * Types in coldplay in the pandora search box, clicks Coldplay, and verifies Coldplay playlist is playing
-     *
-     * @param browser Represents the browser to be used as part of the test run.
-     * @param version Represents the version of the browser to be used as part of the test run.
-     * @param os Represents the operating system to be used as part of the test run.
-     * @param Method Represents the method, used for getting the name of the test/method
-     * @throws Exception if an error occurs during the running of the test
-     */
-    @Test(dataProvider = "hardCodedBrowsers")
-    public void coldplayTest(String browser, String version, String os, Method method) throws Exception {
-        WebDriver driver = createDriver(browser, version, os, method.getName());
-        driver.get("http://www.pandora.com/");
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        // click signin button
-        WebElement searchBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#welcomeSearch .searchInput")));
-        Thread.sleep(3000);
-        searchBox.sendKeys("coldplay");
-
-        WebElement coldplaySuggestion = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='searchPopupWelcomePosition']//span[contains(text(), 'Coldplay')]")));
-        coldplaySuggestion.click();
-
-        WebElement topMenu = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".stationChangeSelectorNoMenu")));
-        Assert.assertTrue(topMenu.getText().contains("Coldplay"), "Text not found!");
-    }
+    
 
     /**
      * @return the {@link WebDriver} for the current thread
